@@ -1,76 +1,62 @@
 #!/usr/bin/env bash
+
 set -euo pipefail
 
-# ─── Helper: check if running on Arch ─────────────────────
-if ! command -v pacman &>/dev/null; then
-    echo "This script is meant for Arch-based systems (pacman required)."
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+DOTFILES_DIR="$SCRIPT_DIR/dotfiles"
+WALLPAPERS_DIR="$SCRIPT_DIR/wallpapers"
+PKGLIST="$SCRIPT_DIR/pkglist.txt"
+
+CONFIG_DIR="$HOME/.config"
+WALLPAPER_TARGET="$HOME/wallpapers"
+
+echo "==> Installing packages..."
+
+if ! command -v yay >/dev/null 2>&1; then
+    echo "Error: yay is not installed."
     exit 1
 fi
 
-# ─── 1. Ensure yay is available ──────────────────────────
-if ! command -v yay &>/dev/null; then
-    echo "yay not found. Installing yay-bin from AUR..."
-    sudo pacman -S --needed --noconfirm git base-devel
-    git clone https://aur.archlinux.org/yay-bin.git /tmp/yay-bin
-    cd /tmp/yay-bin
-    makepkg -si --noconfirm
-    cd -
-    rm -rf /tmp/yay-bin
-    echo "yay installed successfully."
-fi
+# Install only missing packages
+while IFS= read -r pkg; do
+    [[ -z "$pkg" || "$pkg" =~ ^# ]] && continue
 
-# ─── 2. Install required packages ────────────────────────
-SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
-PKGFILE="$SCRIPT_DIR/pkglist.txt"
-
-if [ -f "$PKGFILE" ]; then
-    echo "Installing packages from pkglist.txt..."
-    mapfile -t packages < "$PKGFILE"
-    yay -S --needed --noconfirm "${packages[@]}"
-else
-    echo "No pkglist.txt found – skipping package installation."
-fi
-
-# ─── 3. Symlink dotfiles ─────────────────────────────────
-echo "Symlinking dotfiles..."
-DOTFILES_DIR="$SCRIPT_DIR/dotfiles"
-
-if [ -d "$DOTFILES_DIR" ]; then
-    find "$DOTFILES_DIR" -type f | while read -r src; do
-        rel="${src#$DOTFILES_DIR/}"
-        dest="$HOME/$rel"
-        mkdir -p "$(dirname "$dest")"
-
-        # Backup existing non-symlink files
-        if [ -e "$dest" ] && [ ! -L "$dest" ]; then
-            echo "Backing up $dest → ${dest}.bak"
-            mv "$dest" "${dest}.bak"
-        fi
-
-        ln -sfn "$src" "$dest"
-    done
-else
-    echo "No dotfiles/ directory found – skipping dotfiles setup."
-fi
-
-# ─── 4. Place wallpapers ─────────────────────────────────
-WALLPAPER_SRC="$SCRIPT_DIR/wallpapers"
-WALLPAPER_DEST="$HOME/wallpapers"
-
-if [ -d "$WALLPAPER_SRC" ]; then
-    echo "Linking wallpapers into $WALLPAPER_DEST"
-    if [ -e "$WALLPAPER_DEST" ] && [ ! -L "$WALLPAPER_DEST" ]; then
-        echo "Backing up existing $WALLPAPER_DEST → ${WALLPAPER_DEST}.bak"
-        mv "$WALLPAPER_DEST" "${WALLPAPER_DEST}.bak"
+    if ! pacman -Qi "$pkg" >/dev/null 2>&1; then
+        echo "Installing $pkg..."
+        yay -S --noconfirm --needed "$pkg"
+    else
+        echo "$pkg already installed"
     fi
-    ln -sfn "$WALLPAPER_SRC" "$WALLPAPER_DEST"
-else
-    echo "No wallpapers/ directory found – skipping wallpaper symlink."
+done < "$PKGLIST"
+
+echo "==> Creating config symlinks..."
+
+mkdir -p "$CONFIG_DIR"
+
+for dir in "$DOTFILES_DIR"/*; do
+    [[ -d "$dir" ]] || continue
+
+    name="$(basename "$dir")"
+    target="$CONFIG_DIR/$name"
+
+    if [[ -L "$target" || -e "$target" ]]; then
+        echo "Removing existing $target"
+        rm -rf "$target"
+    fi
+
+    ln -s "$dir" "$target"
+    echo "Linked $name"
+done
+
+echo "==> Linking wallpapers..."
+
+mkdir -p "$(dirname "$WALLPAPER_TARGET")"
+
+if [[ -L "$WALLPAPER_TARGET" || -e "$WALLPAPER_TARGET" ]]; then
+    rm -rf "$WALLPAPER_TARGET"
 fi
 
-# ─── 5. Enable ly display manager ───────────────────────
-echo "Enabling ly display manager..."
-sudo systemctl enable ly@tty1.service
-sudo systemctl set-default graphical.target
+ln -s "$WALLPAPERS_DIR" "$WALLPAPER_TARGET"
 
-echo "All done! Reboot to see what i've done"
+echo "==> Done!"

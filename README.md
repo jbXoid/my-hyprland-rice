@@ -1,2 +1,2 @@
-# Arch Hyprland rice by matrixik1337
-Nothing to say, just rice
+# My Hyprland rice! (Archlinux)
+Just run install.sh script to install it in your Arch

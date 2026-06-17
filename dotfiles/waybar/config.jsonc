@@ -1,28 +1,60 @@
 {
-    "layer": "top",
-    "height": 60,
-    "modules-left": ["hyprland/workspaces"],
-    "modules-center": ["clock"],
-    "modules-right": ["tray", "pulseaudio", "network"],
-    
-    "hyprland/workspaces": {
-        "format": "{name}",
-        "on-click": "activate"
-    },
-    "clock": {
-        "format": "{:%H:%M  %d.%m.%Y}"
-    },
-    "pulseaudio": {
-        "format": "{volume}% {icon}",
-        "format-icons": ["", "", ""]
-    },
-    "network": {
-        "format-wifi": "   {essid}",
-        "format-ethernet": "󰈀",
-        "format-disconnected": "⚠"
-    },
-    "tray": {
-        "spacing": 10
-    }
+	"layer": "top",
+    	"height": 55,
+    	"modules-left": ["cpu","custom/sep","memory"],
+    	"modules-center": ["clock"],
+    	"modules-right": ["tray", "pulseaudio", "custom/sep","network", "custom/sep","battery","custom/sep","hyprland/language"],
 
+   	"custom/sep": {
+		   "format": "|"
+   	},
+    	"hyprland/workspaces": {
+        	"format": "{name}",
+        	"on-click": "activate"
+    	},
+    	"clock": {
+        	"format": "{:%H:%M %d.%m.%Y}"
+    	},
+    	"pulseaudio": {
+        	"format": "{volume}% {icon}",
+        	"format-icons": ["", "", ""]
+    	},
+    	"network": {
+        	"format-wifi": "  {essid}",
+	        "format-ethernet": "󰈀",
+        	"format-disconnected": "⚠"
+	},
+    	"tray": {
+        	"spacing": 10
+    	},
+    
+	"battery": {
+		"bat": "BAT0",
+		"states": { "warning": 30, "critical": 15 },
+		"format": "{icon} {capacity}%",
+		"format-charging": " {capacity}%",
+		"format-plugged": " {capacity}%",
+		"format-icons": ["", "", "", "", ""],
+		"tooltip": true,
+		"interval": 1
+	},
+
+	"hyprland/language": {
+        	"format": "  {short}",
+       		"keyboard-name": "at-translated-set-2-keyboard"
+    	},
+
+	"cpu": {
+		"id":"cpu",
+		"format": " {usage}% ",
+		"states": { "warning": 50, "critical": 75  },
+		"interval": 1
+	  },
+
+	"memory": {
+		"id": "memory",
+		"format": "  {percentage}%",
+		"states": { "warning": 50, "critical": 75  },
+		"interval": 1
+	  }
 }

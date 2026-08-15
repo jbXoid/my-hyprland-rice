@@ -75,8 +75,8 @@ hl.bind("XF86AudioPause", hl.dsp.exec_cmd("playerctl play-pause"), { locked = tr
 hl.bind("XF86AudioPlay", hl.dsp.exec_cmd("playerctl play-pause"), { locked = true })
 hl.bind("XF86AudioPrev", hl.dsp.exec_cmd("playerctl previous"), { locked = true })
 
-hl.bind("Print", hl.dsp.exec_cmd("hyprshot -m region"))
-hl.bind(mainMod .. " + Print", hl.dsp.exec_cmd("hyprshot -m output"))
+hl.bind("Print", hl.dsp.exec_cmd("hyprshot -m region -o ~/Pictures/screenshots"))
+hl.bind(mainMod .. " + Print", hl.dsp.exec_cmd("hyprshot -m output -o ~/Pictures/screenshots"))
 
 hl.bind(mainMod .. " + F", hl.dsp.window.fullscreen())
 
@@ -90,5 +90,5 @@ hl.bind(mainMod .. " + ALT + left", hl.dsp.window.resize({ x = -100, y = 0, rela
 hl.bind(mainMod .. " + ALT + down", hl.dsp.window.resize({ x = 0, y = 100, relative = true }), { repeating = true })
 hl.bind(mainMod .. " + ALT + up", hl.dsp.window.resize({ x = 0, y = -100, relative = true }), { repeating = true })
 
-hl.bind(mainMod .. " + ALT + P", hl.dsp.exec_cmd("poweroff"))
+hl.bind(mainMod .. " + ALT + P", hl.dsp.exec_cmd("shutdown now"))
 hl.bind(mainMod .. " + ALT + R", hl.dsp.exec_cmd("reboot"))

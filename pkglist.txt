@@ -5,6 +5,7 @@ hyprshot
 hyprlock
 hyprlauncher
 hyprpolkitagent
+hypridle
 waybar
 mako
 kitty

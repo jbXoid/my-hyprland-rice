@@ -20,11 +20,11 @@ fi
 
 # Install only missing packages
 while IFS= read -r pkg; do
-    [[ -z "$pkg" || "$pkg" =~ ^# ]] && continue
+    [[ -z $pkg || $pkg =~ ^# ]] && continue
 
-    if ! pacman -Qi "$pkg" >/dev/null 2>&1; then
+    if ! pacman -Qi $pkg >/dev/null 2>&1; then
         echo "Installing $pkg..."
-        yay -S --noconfirm --needed "$pkg"
+        yay -S --noconfirm $pkg
     else
         echo "$pkg already installed"
     fi

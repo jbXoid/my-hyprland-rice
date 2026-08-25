@@ -92,3 +92,5 @@ hl.bind(mainMod .. " + ALT + up", hl.dsp.window.resize({ x = 0, y = -100, relati
 
 hl.bind(mainMod .. " + ALT + P", hl.dsp.exec_cmd("shutdown now"))
 hl.bind(mainMod .. " + ALT + R", hl.dsp.exec_cmd("reboot"))
+
+hl.bind(mainMod .. " + L", hl.dsp.exec_cmd("loginctl lock-session"))

@@ -59,4 +59,7 @@ fi
 
 ln -s "$WALLPAPERS_DIR" "$WALLPAPER_TARGET"
 
+echo "==> Setup sounds..."
+./sounds/setup-system-sounds.sh
+
 echo "==> Done!"

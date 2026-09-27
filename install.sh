@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-set -euo pipefail
-
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 DOTFILES_DIR="$SCRIPT_DIR/dotfiles"
@@ -29,6 +27,14 @@ while IFS= read -r pkg; do
         echo "$pkg already installed"
     fi
 done < "$PKGLIST"
+
+
+echo "==> Installing Oh-My-Zsh and Powerlevel10k theme..."
+
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+git clone --depth=1 https://github.com/romkatv/powerlevel10k.git "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k"
+
+sed -i 's|^ZSH_THEME=.*|ZSH_THEME="powerlevel10k/powerlevel10k"|' ~/.zshrc
 
 echo "==> Creating config symlinks..."
 
@@ -61,5 +67,6 @@ ln -s "$WALLPAPERS_DIR" "$WALLPAPER_TARGET"
 
 echo "==> Setup sounds..."
 ./sounds/setup-system-sounds.sh
+
 
 echo "==> Done!"

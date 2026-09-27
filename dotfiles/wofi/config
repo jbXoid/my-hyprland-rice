@@ -1,0 +1,11 @@
+show=drun
+width=500
+height=350
+location=center
+allow_images=true
+insensitive=true
+prompt=Search
+term=foot
+layer=overlay
+gtk_dark=true
+

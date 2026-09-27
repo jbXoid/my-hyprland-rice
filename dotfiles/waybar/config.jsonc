@@ -3,7 +3,7 @@
     	"height": 55,
     	"modules-left": ["cpu","custom/sep","memory"],
     	"modules-center": ["clock"],
-    	"modules-right": ["tray", "pulseaudio", "custom/sep","network", "custom/sep","battery","hyprland/language"],
+    	"modules-right": ["tray", "pulseaudio", "custom/sep","network", "custom/sep","battery","battery-sep","hyprland/language"],
 
    	"custom/sep": {
 		   "format": "|"
@@ -29,12 +29,19 @@
         	"spacing": 10
     	},
     
+    "custom/battery-sep": {
+      "exec": "~/.config/waybar/scripts/battery-sep.sh",
+      "interval": 30,
+      "format": "{}"
+    },
+
+
 	"battery": {
 		"bat": "BAT0",
 		"states": { "warning": 30, "critical": 15 },
-		"format": "{icon} {capacity}% |",
-		"format-charging": " {capacity}% |",
-		"format-plugged": " {capacity}% |",
+		"format": "{icon} {capacity}%",
+		"format-charging": " {capacity}%",
+		"format-plugged": " {capacity}%",
 		"format-icons": ["", "", "", "", ""],
 		"tooltip": true,
 		"interval": 1

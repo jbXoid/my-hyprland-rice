@@ -83,6 +83,7 @@ hl.bind(mainMod .. " + F", hl.dsp.window.fullscreen())
 hl.bind(mainMod .. " + SHIFT + right", hl.dsp.window.swap({ direction = "r" }))
 hl.bind(mainMod .. " + SHIFT + left", hl.dsp.window.swap({ direction = "l" }))
 hl.bind(mainMod .. " + SHIFT + down", hl.dsp.window.swap({ direction = "d" }))
+
 hl.bind(mainMod .. " + SHIFT + up", hl.dsp.window.swap({ direction = "u" }))
 
 hl.bind(mainMod .. " + ALT + right", hl.dsp.window.resize({ x = 100, y = 0, relative = true }), { repeating = true })
@@ -94,3 +95,6 @@ hl.bind(mainMod .. " + ALT + P", hl.dsp.exec_cmd("shutdown now"))
 hl.bind(mainMod .. " + ALT + R", hl.dsp.exec_cmd("reboot"))
 
 hl.bind(mainMod .. " + L", hl.dsp.exec_cmd("loginctl lock-session"))
+
+
+hl.bind("XF86Calculator", hl.dsp.exec_cmd("kitty python3"))

@@ -20,5 +20,4 @@ playerctl
 pipewire
 mpv
 alsa-utils
-
-
+swayosd

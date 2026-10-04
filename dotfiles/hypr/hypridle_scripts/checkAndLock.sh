@@ -17,10 +17,10 @@ fi
 focused_class="$(hyprctl -j activewindow | jq -r '.class // empty')"
 if [ "$focused_class" = "kitty" ]; then
   exit 0
-  echo "Kitty is focused"
+  echo "Kitty is focused, user possibly running fastfetch 3rd time in a day"
 fi
 
 # no blockers -> lock
 echo "Seems that user is forgot about computer"
-~/.config/hypr//hypridle_scripts/lock.sh
+loginctl lock-session
 

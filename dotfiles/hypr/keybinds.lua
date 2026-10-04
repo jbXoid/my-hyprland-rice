@@ -91,9 +91,6 @@ hl.bind(mainMod .. " + ALT + R", hl.dsp.exec_cmd("reboot"))
 
 hl.bind(mainMod .. " + L", hl.dsp.exec_cmd("loginctl lock-session"))
 
-<<<<<<< HEAD
 
 hl.bind("XF86Calculator", hl.dsp.exec_cmd("kitty python3"))
-=======
 hl.bind(mainMod .. " + SPACE", hl.dsp.exec_cmd("~/.config/hypr/keybinds_scripts/layout_popup.sh"))
->>>>>>> 17fc990 (Added keyboard layout switch pop up and deleted sounds for remake)

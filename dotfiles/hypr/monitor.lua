@@ -1,6 +1,6 @@
 -- MONITORS
 
-local MAIN_SCALING = 2
+local MAIN_SCALING = 1.5
 
 
 hl.monitor({

@@ -93,4 +93,4 @@ hl.bind(mainMod .. " + L", hl.dsp.exec_cmd("loginctl lock-session"))
 
 
 hl.bind("XF86Calculator", hl.dsp.exec_cmd("kitty python3"))
-hl.bind(mainMod .. " + SPACE", hl.dsp.exec_cmd("~/.config/hypr/keybinds_scripts/layout_popup.sh"))
+hl.bind(mainMod .. " + SPACE", hl.dsp.exec_cmd("~/.config/hypr/keybinds_scripts/keymap_popup.sh"))

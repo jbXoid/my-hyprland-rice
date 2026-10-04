@@ -4,7 +4,7 @@ MAIN_SCALING=2
 
 hl.env("XCURSOR_SIZE", "24")
 hl.env("HYPRCURSOR_SIZE", "24")
-hl.env("GDK_SCALE", MAIN_SCALING)
+hl.env("GDK_SCALE", MAIN_SCALING*0.75)
 
 hl.env("HYPRSHOT_DIR", "Pictures/Screenshots")
 
